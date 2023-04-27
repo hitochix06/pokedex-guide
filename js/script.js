@@ -39,6 +39,15 @@ searchInput.addEventListener("focus", () => {
     searchInput.value = '';
 });
 
+//recuperation  le bouton valider
+const boutonValider = document.querySelector("#buttonValide");
+
+boutonValider.addEventListener("click", () => {
+    const pokemonName = searchInput.value.toLowerCase();
+    fetchPokemon(pokemonName);
+    fadeOutPokemon();
+});
+
 
 
 /************************************************
@@ -155,7 +164,6 @@ boutonDroite.addEventListener("click", function () {
 
 
 
-
 /****************************************
 **faire une animation pour les bouton  **
 *****************************************/
@@ -172,38 +180,6 @@ function fadeOutPokemon() {
     imagePokemon.classList.remove("animate__bounceInDown")
     imagePokemon.classList.add("animate__bounceOutDown")
 }
-
-/****************************************
-**********Recupere l'api ****************
-*****************************************/
-// searchInput.addEventListener("input", () => {
-//     const pokemonName = searchInput.value.toLowerCase();
-//     fetch(`https://pokeapi.co/api/v2/pokemon/${pokemonName}`)
-//         .then(response => response.json())
-//         .then(data => {
-//             const pokemon = {
-//                 name: data.name,
-//                 id: data.id,
-//                 image: data.sprites.front_default,
-//                 type: data.types[0].type.name,
-//                 height: data.height,
-//                 weight: data.weight,
-//                 abilities: data.abilities[0].ability.name
-//             };
-//             const pokemonHtml = `
-//                         <h2>${pokemon.name} (n°${pokemon.id})</h2>
-//                         <img src="${pokemon.image}">
-//                         <p>Type : ${pokemon.type}</p>
-//                         <p>Hauteur : ${pokemon.height / 10} m</p>
-//                         <p>Poids : ${pokemon.weight / 10} kg</p>
-//                         <p>Capacités : ${pokemon.abilities}</p>
-//                     `;
-//             searchResults.innerHTML = pokemonHtml;
-//         })
-//         .catch(() => {
-//             searchResults.innerHTML = "<p>Pokémon non trouvé</p>";
-//         });
-// });
 
 
 //fonction pour recuperer les information du pokemon
