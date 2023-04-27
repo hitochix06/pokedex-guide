@@ -42,10 +42,10 @@ searchInput.addEventListener("focus", () => {
 //recuperation  le bouton valider
 const boutonValider = document.querySelector("#buttonValide");
 
+
 boutonValider.addEventListener("click", () => {
     const pokemonName = searchInput.value.toLowerCase();
     fetchPokemon(pokemonName);
-    fadeOutPokemon();
 });
 
 
@@ -137,7 +137,7 @@ function afficheAbilitiesPokemon(data) {
 boutonAleatoire.addEventListener("click", function () {
     IdSearch = Math.floor(Math.random() * (898 - 1) + 1);
     fetchPokemon(IdSearch);
-    fadeOutPokemon();
+
 });
 
 
@@ -183,16 +183,24 @@ function fadeOutPokemon() {
 
 
 //fonction pour recuperer les information du pokemon
-function fetchPokemon(id, _isPrev = false) {
+function fetchPokemon(id) {
     fetch("https://pokeapi.co/api/v2/pokemon/" + id)
-        .then(response => response.json())
-        .then(data => {
-            setTimeout(() => {
-                replaceContent(data)
+        .then(function (response) {
+            if (!response.ok) {
+                alert("Pokemon non trouvé");
+                throw new Error("Not 2xx response", { cause: response });
+            } else {
+                response.json()
+                    .then((data) => setTimeout(() => {
 
-                fadeInPokemon();
-            }, "500")
+                        IdSearch = data.id;
+                        replaceContent(data)
+                        fadeInPokemon();
+                    }, "500"))
+                fadeOutPokemon();
+            }
         });
+
 }
 
 function replaceContent(data) {
