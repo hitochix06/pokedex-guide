@@ -124,12 +124,11 @@ function afficheAbilitiesPokemon(data) {
 **fonction clique des bouton aleatoire **
 *****************************************/
 
-
-
 //bouton aleatoire
 boutonAleatoire.addEventListener("click", function () {
     IdSearch = Math.floor(Math.random() * (898 - 1) + 1);
     fetchPokemon(IdSearch);
+    fadeOutPokemon();
 });
 
 
@@ -139,17 +138,40 @@ boutonAleatoire.addEventListener("click", function () {
 *****************************************/
 
 boutonGauche.addEventListener("click", function () {
-    IdSearch = IdSearch - 1;
-    fetchPokemon(IdSearch);
+    if (IdSearch > 1) {
+        IdSearch--
+        fadeOutPokemon();
+        fetchPokemon(IdSearch, true);
+    }
+
 });
 
 //bouton droit
 boutonDroite.addEventListener("click", function () {
-    IdSearch = IdSearch + 1;
+    IdSearch++;
     fetchPokemon(IdSearch);
+    fadeOutPokemon();
 });
 
 
+
+
+/****************************************
+**faire une animation pour les bouton  **
+*****************************************/
+
+
+function fadeInPokemon() {
+    imagePokemon.style = "--animate-duration: 0.8s";
+    imagePokemon.classList.remove("animate__bounceOutDown")
+    imagePokemon.classList.add("animate__bounceInDown")
+}
+function fadeOutPokemon() {
+    console.log(imagePokemon)
+    imagePokemon.style = "--animate-duration: 0.8s";
+    imagePokemon.classList.remove("animate__bounceInDown")
+    imagePokemon.classList.add("animate__bounceOutDown")
+}
 
 /****************************************
 **********Recupere l'api ****************
@@ -189,9 +211,11 @@ function fetchPokemon(id, _isPrev = false) {
     fetch("https://pokeapi.co/api/v2/pokemon/" + id)
         .then(response => response.json())
         .then(data => {
-            replaceContent(data)
-            formateNumber(number)
-            getCorrectValue(value)
+            setTimeout(() => {
+                replaceContent(data)
+
+                fadeInPokemon();
+            }, "500")
         });
 }
 
