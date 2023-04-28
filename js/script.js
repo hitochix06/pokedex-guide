@@ -1,5 +1,5 @@
 let IdSearch = 1;
-
+// -- Les types de pokémons
 const colors = {
     fire: "#ff7402",
     grass: "#33a165",
@@ -157,9 +157,11 @@ boutonGauche.addEventListener("click", function () {
 
 //bouton droit
 boutonDroite.addEventListener("click", function () {
-    IdSearch++;
-    fetchPokemon(IdSearch);
-    fadeOutPokemon();
+    if (IdSearch < 898) {
+        IdSearch++
+        fadeOutPokemon();
+        fetchPokemon(IdSearch);
+    }
 });
 
 
